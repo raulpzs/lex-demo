@@ -1,6 +1,6 @@
 # LEX — VS Code Project
 
-This is the editable local version of the LEX website.
+This is the LEX public platform demo.
 
 ## Important architecture note
 
