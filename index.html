@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LEX — Law, Expression & AI." />
+  <title>LEX — Law, Expression & AI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand" data-page="home"><span class="mark">L</span><span>LEX<small>Law · Expression · AI</small></span></a>
+    <nav aria-label="Main navigation">
+      <button data-page="home" class="active">Home</button>
+      <button data-page="corpus">Explore Corpus</button>
+      <button data-page="codebook">Codebook</button>
+      <button data-page="data">Download Data</button>
+      <button data-page="coding">Code a Law</button>
+      <button data-page="research">Research</button>
+      <button data-page="tracker">Global Tracker</button>
+      <button data-page="hr">Human Rights Reporting</button>
+      <button data-page="about">About</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="home" class="page active">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> LEX public platform</div>
+      <h1>How does AI law shape expression?</h1>
+      <p class="lead">LEX turns complex AI laws into a structured comparative corpus — combining systematic legal coding, AI-assisted analysis, human verification, policy research, and global legislative monitoring.</p>
+      <div class="actions"><button class="btn primary" data-page="corpus">Explore the corpus →</button><button class="btn" data-page="codebook">Explore the codebook</button></div>
+    </div>
+    <aside class="hero-panel">
+      <div class="mini-title">Platform snapshot</div>
+      <div class="stat-grid">
+        <div class="stat"><b>5</b><span>coded AI laws / versions</span></div>
+        <div class="stat"><b>253</b><span>codebook items</span></div>
+        <div class="stat"><b>AI +</b><span>human verification</span></div>
+        <div class="stat"><b>Global</b><span>comparative scope</span></div>
+      </div>
+      <div class="notice" style="margin-top:14px">A unified public platform for exploring law, expression, AI governance, and comparative legal change.</div>
+    </aside>
+  </div>
+  <div class="wrap section">
+    <div class="section-head"><div><div class="eyebrow">One platform</div><h2>From legal text to public insight</h2></div><p>Move from legal instruments, to coded evidence, to comparative findings, legislative developments, and human-rights reporting.</p></div>
+    <div class="cards">
+      <article class="card"><div class="num">01 · CORPUS</div><h3>Explore laws</h3><p>Browse coded AI laws, inspect provisions, and compare jurisdictions.</p><button data-page="corpus">Explore →</button></article>
+      <article class="card"><div class="num">02 · CODEBOOK</div><h3>Understand the coding</h3><p>Search the complete LEX coding framework and inspect Institutional Grammar for each item.</p><button data-page="codebook">Open codebook →</button></article>
+      <article class="card"><div class="num">03 · MONITORING</div><h3>Track legal change</h3><p>Follow proposed bills globally and connect emerging legislation to expression-related risks.</p><button data-page="tracker">Open tracker →</button></article>
+    </div>
+  </div>
+</section>
+
+<section id="corpus" class="page">
+  <div class="wrap subhero">
+    <div class="eyebrow">LEX Corpus</div><h1>Explore AI law through expression.</h1>
+    <p class="lead">Search laws, filter jurisdictions, and inspect provision-level coding across the LEX corpus.</p>
+    <div class="toolbar"><label><span>Search</span><input id="search" placeholder="Search law or jurisdiction"></label><label><span>Jurisdiction</span><select id="filter"><option value="all">All jurisdictions</option><option>European Union</option><option>China</option></select></label></div>
+  </div>
+  <div class="wrap explorer"><div id="lawList" class="law-list"></div><div id="lawDetail" class="detail"></div></div>
+</section>
+
+<section id="codebook" class="page">
+  <div class="wrap subhero">
+    <div class="eyebrow">LEX Codebook · Fall 2025</div>
+    <h1>Explore how LEX codes law.</h1>
+    <p class="lead">LEX uses Institutional Grammar to turn legal text into comparable legal rules. Search all 253 coding items by section, actor, or type of expression.</p>
+    <div class="actions"><a class="btn" href="Codebook_F25.pdf" target="_blank" rel="noopener">Open full codebook PDF ↗</a></div>
+  </div>
+  <div class="wrap codebook-intro">
+    <div class="panel">
+      <div class="mini-title">Institutional Grammar</div>
+      <h3 style="margin-top:10px">ADICO syntax</h3>
+      <p style="color:var(--muted);font-size:14px">Each institutional statement identifies who a rule applies to, the expected behavior, the action or outcome, the conditions under which it applies, and the institutional consequence for noncompliance.</p>
+      <div class="adico">
+        <div><b>A</b><small>Attribute</small></div><div><b>D</b><small>Deontic</small></div><div><b>I</b><small>aIm</small></div><div><b>C</b><small>Condition</small></div><div><b>O</b><small>Or Else</small></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="mini-title">Coding values</div>
+      <div class="stat-grid">
+        <div class="stat"><b>1</b><span>legal rule appears as written</span></div>
+        <div class="stat"><b>nil</b><span>legal rule does not exist</span></div>
+        <div class="stat"><b>-1</b><span>rule appears as the negation</span></div>
+        <div class="stat"><b>3</b><span>key conditions: general, crisis, online</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="toolbar four">
+      <label><span>Search coding items</span><input id="cbSearch" placeholder="Search variable, rule, topic…"></label>
+      <label><span>Section</span><select id="cbSection"><option value="all">All sections</option><option value="2.1">General Expression</option><option value="2.2">ICCPR Protected</option><option value="2.3">Non-ICCPR</option><option value="2.4">Governance</option><option value="2.5">Operational</option><option value="2.6">Legal Protection</option></select></label>
+      <label><span>Actor</span><select id="cbActor"><option value="all">All actors</option></select></label>
+      <label><span>Content</span><select id="cbContent"><option value="all">All content types</option></select></label>
+    </div>
+    <div class="codebook-layout">
+      <div class="item-list-wrap"><p id="cbCount" class="results-meta"></p><div id="cbList" class="item-list"></div><button id="cbMore" class="btn" style="margin-top:12px">Show more</button></div>
+      <div id="cbDetail" class="detail"></div>
+    </div>
+  </div>
+</section>
+
+<section id="data" class="page">
+  <div class="wrap subhero">
+    <div class="eyebrow">Open Data</div><h1>Download the LEX dataset.</h1>
+    <p class="lead">LEX data are archived in Harvard Dataverse for public access, citation, and reuse.</p>
+  </div>
+  <div class="wrap data-hero">
+    <div class="doi-card">
+      <div class="mini-title">Harvard Dataverse</div>
+      <h2 style="font-size:38px;margin-top:10px">LEX data archive</h2>
+      <p>Access the dataset record, version information, metadata, and downloadable files through Harvard Dataverse.</p>
+      <p class="doi">doi:10.7910/DVN/ITKWZW</p>
+      <div class="data-actions">
+        <a class="btn primary" href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/ITKWZW" target="_blank" rel="noopener">View dataset on Harvard Dataverse ↗</a>
+        <a class="btn" href="https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/ITKWZW">Download all files ↓</a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="mini-title">Use the data</div>
+      <h3 style="margin-top:10px">Research-ready access</h3>
+      <p style="color:var(--muted)">The archive serves as the canonical public distribution point for LEX data. Dataset versions can be cited using the persistent DOI.</p>
+      <div class="evidence"><strong>Persistent identifier</strong><p style="font-size:14px;color:var(--muted)">The DOI remains the stable reference even as new dataset versions are published.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="coding" class="page">
+  <div class="wrap subhero"><div class="eyebrow">LEX coding tool</div><h1>Code a legal text.</h1><p class="lead">Analyze legal text through the LEX coding workflow and review coded results.</p></div>
+  <div class="wrap tool-grid">
+    <section class="panel">
+      <div class="step"><span>1</span><strong>Add a law</strong></div>
+      <div class="upload"><strong>Upload PDF / TXT / MD</strong><p style="font-size:13px;color:var(--muted)">PDF · TXT · MD</p><button id="sample" class="btn">Load sample text</button></div>
+      <label style="display:block;margin-top:16px"><span>Legal text</span><textarea id="legalText" placeholder="Paste legal text here…"></textarea></label>
+      <div class="actions" style="margin-top:14px"><button id="run" class="btn primary">Run Round 1 · Coding</button><button id="clear" class="btn">Clear</button></div>
+    </section>
+    <section class="panel">
+      <div class="step"><span>2</span><strong>Review coding</strong></div>
+      <div id="empty" class="results-empty"><div><strong>No results yet</strong><p>Run the coding workflow to review results.</p></div></div>
+      <div id="results" class="results">
+        <div class="stat-grid"><div class="stat"><b>4</b><span>matches</span></div><div class="stat"><b>R1</b><span>coding round</span></div></div>
+        <div class="result-item"><strong>Expression · Rights of others</strong><small>Evidence excerpt and legal citation.</small></div>
+        <div class="result-item"><strong>Governance · Oversight</strong><small>Model rationale followed by reviewer verification.</small></div>
+        <button id="verify" class="btn" style="width:100%;justify-content:center;margin-top:14px">Run Round 2 · Verification</button>
+        <div id="verified" class="notice" style="display:none;margin-top:12px">Verification complete. A reviewer can accept, edit, or reject each classification before publication.</div>
+      </div>
+    </section>
+  </div>
+  <div class="wrap" style="padding-bottom:64px">
+    <div class="section-head"><div><div class="eyebrow">Existing functionality</div><h2>Expression Laws coding tool</h2></div><p>The existing Hugging Face coding tool is available directly within LEX.</p></div>
+    <div class="embed-wrap"><div class="embed-head"><strong>Expression Laws · live tool</strong><a class="btn" href="https://huggingface.co/spaces/raulpzs/expression_laws" target="_blank" rel="noopener">Open separately ↗</a></div><iframe src="https://raulpzs-expression-laws.hf.space/" title="LEX Expression Laws coding tool"></iframe></div>
+  </div>
+</section>
+
+<section id="research" class="page">
+  <div class="wrap subhero"><div class="eyebrow">Research & policy</div><h1>Turn the corpus into usable research.</h1><p class="lead">LEX connects comparative legal findings to policy memos, analysis, newsletters, and public commentary.</p></div>
+  <div class="wrap pubs">
+    <article class="pub"><span class="type">Policy memo</span><h3>AI Governance & Freedom of Expression</h3><p>Comparative analysis drawing directly from coded provisions across jurisdictions.</p><a href="#" class="btn">Read memo</a></article>
+    <article class="pub"><span class="type">Comparative analysis</span><h3>Regulating Synthetic and AI-Generated Content</h3><p>Cross-national analysis of emerging disclosure, platform, and expression rules.</p><a href="#" class="btn">Read analysis</a></article>
+    <article class="pub"><span class="type">Commentary</span><h3>What New AI Laws Mean for Speech</h3><p>Accessible public commentary translating legal-comparative findings for a broader audience.</p><a href="#" class="btn">Read article</a></article>
+  </div>
+</section>
+
+<section id="tracker" class="page">
+  <div class="wrap subhero">
+    <div class="eyebrow">Global Tracker · Updated monthly</div>
+    <h1>Track bills before they become law.</h1>
+    <p class="lead">LEX monitors proposed national legislation that could enter the corpus if enacted and that has a meaningful connection to freedom of expression, online speech, synthetic media, or platform governance.</p>
+    <div class="tracker-controls">
+      <label><span>Search tracker</span><input id="trackerSearch" placeholder="Search country, bill, topic…"></label>
+      <label><span>Status</span><select id="trackerStatus"><option value="all">All statuses</option><option>Introduced</option><option>Committee</option><option>Chamber review</option></select></label>
+      <label><span>Region</span><select id="trackerRegion"><option value="all">All regions</option><option>Americas</option><option>Europe</option><option>Asia-Pacific</option><option>Africa</option></select></label>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="section-head"><div><h2 style="font-size:34px">Legislation under watch</h2></div><p id="trackerCount"></p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Country</th><th>Bill</th><th>Status</th><th>Expression relevance</th><th>Last reviewed</th><th>Source</th></tr></thead>
+        <tbody id="trackerBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="hr" class="page">
+  <div class="wrap subhero">
+    <div class="eyebrow">Human Rights Reporting</div>
+    <h1>Assess the normative direction of AI law.</h1>
+    <p class="lead">LEX will aggregate the valence of coded legal rules into law-level normative scores, making it possible to compare whether legal frameworks tend to protect or constrain expression.</p>
+  </div>
+  <div class="wrap hr-method">
+    <div class="panel">
+      <div class="mini-title">Normative score</div><h3 style="margin-top:10px">Built from coded legal rules</h3>
+      <p style="color:var(--muted)">The codebook distinguishes rules that appear as written, rules that do not appear, and rules that appear in negated form. Law-level reporting can aggregate these coded valences into a comparable score.</p>
+    </div>
+    <div class="panel">
+      <div class="mini-title">Categories</div><h3 style="margin-top:10px">Classification framework</h3>
+      <p style="color:var(--muted)">Each law will also receive a human-rights category. Category thresholds and labels will be fixed once the scoring framework is finalized.</p>
+      <div class="tags"><span class="badge neutral">Category framework pending</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="section-head"><div><h2 style="font-size:34px">Coded laws</h2></div><p>Scores populate from the verified coded dataset.</p></div>
+    <div id="scoreGrid" class="score-grid"></div>
+  </div>
+</section>
+
+<section id="about" class="page">
+  <div class="wrap subhero"><div class="eyebrow">About LEX</div><h1>A research infrastructure for law, AI, and expression.</h1></div>
+  <div class="wrap about-grid">
+    <div><p class="lead">LEX combines systematic legal coding with AI-assisted analysis and human verification. The public platform serves as both a comparative legal corpus and a practical tool for scholars, advocates, journalists, and policymakers.</p><div class="notice">LEX connects legal texts, structured coding, data access, legislative monitoring, human-rights reporting, and public-facing research in one platform.</div></div>
+    <div class="flow"><div><b>1 · Collect</b><span>Identify relevant law.</span></div><div><b>2 · Code</b><span>Apply the LEX codebook.</span></div><div><b>3 · Verify</b><span>Human review of results.</span></div><div><b>4 · Publish</b><span>Corpus, data, tracking, and research.</span></div></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>LEX · Law, Expression & AI</span><span>Comparative legal research platform</span></div></footer>
+
+<script src="data/laws.js"></script>
+<script src="data/codebook.js"></script>
+<script src="data/tracker.js"></script>
+<script src="data/scores.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
