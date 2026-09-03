@@ -34,7 +34,7 @@ function cbFiltered(){
 }
 function renderCbDetail(num){
   const x=codebook.find(i=>i.number===num)||codebook[0]; cbSelected=x.number;
-  cbDetail.innerHTML=`<div class="tags"><span class="badge">${x.number}</span><span class="badge neutral">${x.sectionKey}</span><span class="badge neutral">${x.subsection}</span></div><h2 style="font-size:31px;margin-top:14px">${x.variable}</h2><p>${x.statement}</p><h3 style="margin-top:24px">Institutional Grammar</h3><div class="adico-raw">${x.adico||'ADICO formulation listed in the full codebook.'}</div><h3 style="margin-top:22px">Classification</h3><div class="tags"><span class="badge">${x.actor}</span><span class="badge">${x.content}</span></div><div class="evidence"><strong>Coding values</strong><p style="font-size:14px;color:var(--muted)">1 = legal rule appears as written · nil = legal rule does not exist · -1 = legal rule appears as the negation of what is written.</p></div>`;
+  cbDetail.innerHTML=`<div class="tags"><span class="badge">${x.number}</span><span class="badge neutral">${x.sectionKey}</span><span class="badge neutral">${x.subsection}</span></div><h2 style="font-size:31px;margin-top:14px">${x.variable}</h2><p>${x.statement}</p><h3 style="margin-top:24px">Institutional Grammar</h3><div class="adico-raw">${x.adico||'ADICO formulation listed in the full codebook.'}</div><h3 style="margin-top:22px">Classification</h3><div class="tags"><span class="badge">${x.actor}</span><span class="badge">${x.content}</span></div><div class="evidence"><strong>Coding values</strong><p style="font-size:14px;color:var(--muted)">1 = legal rule appears as written <br> 0 = legal rule does not exist <br> -1 = legal rule appears as the negation of what is written.</p></div>`;
   renderCbList();
 }
 function renderCbList(){
