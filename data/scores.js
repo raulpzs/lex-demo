@@ -5,9 +5,4 @@
 // rationale is optional.
 
 const humanRightsScores = [
-  { id: "eu24", score: null, category: "", rationale: "" },
-  { id: "eu26", score: null, category: "", rationale: "" },
-  { id: "cn-algo", score: null, category: "", rationale: "" },
-  { id: "cn-deep", score: null, category: "", rationale: "" },
-  { id: "cn-gen", score: null, category: "", rationale: "" }
 ];

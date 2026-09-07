@@ -9,7 +9,7 @@ This folder is a **static frontend**. It has no custom backend.
 - `index.html` — page structure
 - `styles.css` — visual design
 - `app.js` — interactions, search, filters, tab navigation
-- `data/laws.js` — laws shown in Explore Corpus
+- `laws_coded.csv` — runtime source for laws shown in Explore Corpus
 - `data/codebook.js` — 253 searchable Fall 2025 codebook items
 - `data/tracker.js` — monthly Global Tracker entries
 - `data/scores.js` — future Human Rights Reporting scores/categories
@@ -49,9 +49,8 @@ Then open:
 
 ## What to edit most often
 
-### Add/update a law
-Edit:
-`data/laws.js`
+### Add/update the Corpus
+Replace `laws_coded.csv` with a newer file using the same schema. The browser reads it directly at runtime; no generated JavaScript data file is needed.
 
 ### Monthly Global Tracker update
 Edit:

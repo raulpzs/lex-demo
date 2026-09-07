@@ -5,22 +5,88 @@ document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click'
 
 
 
-let selected='eu24';
+let selected=null, corpusLaws=[], codingKeys=[], showAllKeys=false;
 const lawList=document.getElementById('lawList'), detail=document.getElementById('lawDetail');
+const corpusCsvPath='laws_coded.csv';
+const escapeHtml=value=>String(value).replace(/[&<>"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[char]));
+
+function parseCsv(text){
+  const rows=[[]]; let cell='', quoted=false;
+  for(let i=0;i<text.length;i++){
+    const char=text[i];
+    if(quoted){
+      if(char==='"'&&text[i+1]==='"'){cell+='"';i++;}
+      else if(char==='"') quoted=false;
+      else cell+=char;
+    }else if(char==='"') quoted=true;
+    else if(char===','){rows.at(-1).push(cell);cell='';}
+    else if(char==='\n'){rows.at(-1).push(cell);rows.push([]);cell='';}
+    else if(char!=='\r') cell+=char;
+  }
+  rows.at(-1).push(cell);
+  return rows;
+}
+function parseYear(value){
+  const raw=String(value||'').trim();
+  const fourDigit=raw.match(/^(\d{4})/);
+  if(fourDigit) return fourDigit[1];
+  const shortDate=raw.match(/^\d{1,2}\/\d{1,2}\/(\d{2})$/);
+  if(shortDate){const year=Number(shortDate[1]);return String(year<=29?2000+year:1900+year);}
+  return 'Year unavailable';
+}
+function parseCode(value){
+  const match=String(value||'').match(/\(\s*([+-]?\d+)\s*\)/);
+  return match?Number(match[1]):0;
+}
+function cleanCountry(value){
+  const raw=String(value||'').trim().replace(/\s+/g,' ');
+  return ({'Phillipines':'Philippines','Gambia':'The Gambia','OEA':'Organization of American States','United States of America':'United States','Côte d"Ivoire':'Côte d’Ivoire'})[raw]||raw;
+}
+function cleanLaw(value){return String(value||'').trim().replace(/\s+/g,' ');}
+function showCorpusError(message){
+  lawList.innerHTML=`<p style="color:var(--muted)">${escapeHtml(message)}</p>`;
+  detail.innerHTML=`<div class="evidence"><strong>Corpus unavailable</strong><p style="font-size:14px;color:var(--muted)">${escapeHtml(message)}</p></div>`;
+}
 function renderDetail(id){
-  selected=id; const x=laws.find(l=>l.id===id);
-  detail.innerHTML=`<span class="badge">${x.status}</span><h2 style="font-size:34px;margin-top:14px">${x.title}</h2><p style="color:var(--muted);margin-top:0">${x.place} · ${x.year}</p><p>${x.summary}</p><h3 style="margin-top:24px">LEX domains</h3><div class="tags">${x.domains.map(d=>`<span class="badge">${d}</span>`).join('')}</div><div class="evidence"><strong>Provision-level record</strong><p style="font-size:14px;color:var(--muted)">The public record shows the provision key, code, statutory evidence, explanation, reviewer status, and links to comparable provisions.</p><span class="badge">Human verified</span></div>`;
+  selected=id; const x=corpusLaws.find(l=>l.id===id); if(!x)return;
+  const rules=codingKeys.map(key=>({key,value:parseCode(x.raw[key])})).filter(rule=>showAllKeys||rule.value!==0);
+  const valueBadge=rule=>rule.value===1?'background:#e8f4ed;color:#21603a':rule.value===-1?'background:#f9e9e8;color:#9b302c':'background:#eef0ef;color:#5b6660';
+  detail.innerHTML=`<h2 style="font-size:34px;margin-top:0">${escapeHtml(x.title)}</h2><p style="color:var(--muted);margin-top:0">${escapeHtml(x.country)} · ${escapeHtml(x.year)}</p><div class="evidence"><strong>LEX coding rules</strong><p style="font-size:14px;color:var(--muted)">Showing ${rules.length} of ${codingKeys.length} coding keys. Values are LEX coded legal-rule values.</p><button id="toggleAllKeys" class="btn">${showAllKeys?'Hide zero/default keys':'Show all keys'}</button></div><div class="item-list" style="margin-top:16px">${rules.map(rule=>`<div class="item-row" style="cursor:default"><strong>${escapeHtml(rule.key)}</strong><span class="badge" style="float:right;${valueBadge(rule)}">${escapeHtml(rule.value)}</span></div>`).join('')}</div>`;
+  document.getElementById('toggleAllKeys').addEventListener('click',()=>{showAllKeys=!showAllKeys;renderDetail(selected);});
   renderList();
 }
 function renderList(){
   const q=document.getElementById('search').value.toLowerCase(), f=document.getElementById('filter').value;
-  const filtered=laws.filter(x=>(f==='all'||x.place===f)&&(x.title+' '+x.place).toLowerCase().includes(q));
-  lawList.innerHTML=filtered.map(x=>`<button class="law-row ${x.id===selected?'active':''}" data-law="${x.id}"><strong>${x.title}</strong><small>${x.place} · ${x.year}</small></button>`).join('')||'<p style="color:var(--muted)">No matching laws.</p>';
+  const filtered=corpusLaws.filter(x=>(f==='all'||x.country===f)&&(!q||x.search.includes(q)));
+  lawList.innerHTML=filtered.map(x=>`<button class="law-row ${x.id===selected?'active':''}" data-law="${escapeHtml(x.id)}"><strong>${escapeHtml(x.title)}</strong><small>${escapeHtml(x.country)} · ${escapeHtml(x.year)}</small></button>`).join('')||'<p style="color:var(--muted)">No matching laws.</p>';
   lawList.querySelectorAll('[data-law]').forEach(b=>b.addEventListener('click',()=>renderDetail(b.dataset.law)));
+}
+async function loadCorpus(){
+  try{
+    const response=await fetch(corpusCsvPath);
+    if(!response.ok) throw new Error(`Unable to load ${corpusCsvPath}.`);
+    const [headers,...rows]=parseCsv(await response.text());
+    const keyStart=headers.indexOf('C_DISINFO_GEN');
+    if(keyStart===-1) throw new Error('The CSV does not contain the C_DISINFO_GEN coding-key column.');
+    codingKeys=headers.slice(keyStart).filter(header=>header&&!header.endsWith('_NOTE'));
+    corpusLaws=rows.filter(row=>row.some(cell=>String(cell).trim())).map((row,index)=>{
+      const raw=Object.fromEntries(headers.map((header,column)=>[header,row[column]||'']));
+      const rawCountry=raw.COUNTRY||'', rawLaw=raw.LAW||'';
+      const country=cleanCountry(rawCountry), title=cleanLaw(rawLaw);
+      return {id:`csv-row-${index+1}`,country,title,year:parseYear(raw.SRCEYR),raw,search:`${rawCountry} ${country} ${rawLaw} ${title}`.toLowerCase()};
+    }).filter(law=>law.country||law.title);
+    if(!corpusLaws.length) throw new Error('The CSV contains no usable law rows.');
+    const filter=document.getElementById('filter');
+    filter.innerHTML='<option value="all">All jurisdictions</option>';
+    [...new Set(corpusLaws.map(law=>law.country))].sort((a,b)=>a.localeCompare(b)).forEach(country=>{const option=document.createElement('option');option.value=country;option.textContent=country;filter.appendChild(option);});
+    selected=corpusLaws[0].id;
+    renderDetail(selected);
+    renderScoreGrid(corpusLaws);
+  }catch(error){showCorpusError(error.message||'The Corpus CSV could not be loaded.');}
 }
 document.getElementById('search').addEventListener('input',renderList);
 document.getElementById('filter').addEventListener('change',renderList);
-renderDetail(selected);
+loadCorpus();
 
 
 const cbSearch=document.getElementById('cbSearch'), cbSection=document.getElementById('cbSection'), cbActor=document.getElementById('cbActor'), cbContent=document.getElementById('cbContent');
@@ -65,12 +131,12 @@ function renderTracker(){
 renderTracker();
 
 const scoreGrid=document.getElementById('scoreGrid');
-scoreGrid.innerHTML=laws.map(x=>{
+function renderScoreGrid(laws){scoreGrid.innerHTML=laws.map(x=>{
   const report=(humanRightsScores||[]).find(r=>r.id===x.id) || {};
   const score=(report.score===null || report.score===undefined) ? '—' : report.score;
   const scoreLabel=(report.score===null || report.score===undefined) ? 'Score pending' : `Score ${report.score}`;
   const category=report.category || 'Category pending';
-  return `<article class="score-card"><div class="score-top"><div><span class="badge">${x.place}</span><h3 style="margin-top:12px">${x.title}</h3><p class="count-pill">${x.year} · verified coding</p></div><div class="score-value">${score}</div></div><div class="score-scale"></div><div class="score-labels"><span>More restrictive</span><span>More protective</span></div><div class="tags" style="margin-top:15px"><span class="badge neutral">${scoreLabel}</span><span class="badge neutral">${category}</span></div>${report.rationale?`<div class="evidence"><strong>Assessment rationale</strong><p style="font-size:14px;color:var(--muted)">${report.rationale}</p></div>`:''}</article>`;
-}).join('');
+  return `<article class="score-card"><div class="score-top"><div><span class="badge">${x.country}</span><h3 style="margin-top:12px">${x.title}</h3><p class="count-pill">${x.year} · verified coding</p></div><div class="score-value">${score}</div></div><div class="score-scale"></div><div class="score-labels"><span>More restrictive</span><span>More protective</span></div><div class="tags" style="margin-top:15px"><span class="badge neutral">${scoreLabel}</span><span class="badge neutral">${category}</span></div>${report.rationale?`<div class="evidence"><strong>Assessment rationale</strong><p style="font-size:14px;color:var(--muted)">${report.rationale}</p></div>`:''}</article>`;
+}).join('');}
 
 document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
