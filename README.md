@@ -78,7 +78,7 @@ Example:
 
 ```js
 {
-  id: "eu24",
+  id: "law-Country%7CLaw%20Title%7C2024",
   score: 0.65,
   category: "Your future category",
   rationale: "Short explanation of the score."

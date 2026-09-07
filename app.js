@@ -43,6 +43,7 @@ function cleanCountry(value){
   return ({'Phillipines':'Philippines','Gambia':'The Gambia','OEA':'Organization of American States','United States of America':'United States','Côte d"Ivoire':'Côte d’Ivoire'})[raw]||raw;
 }
 function cleanLaw(value){return String(value||'').trim().replace(/\s+/g,' ');}
+function stableLawId(country,law,sourceYear){return `law-${encodeURIComponent(`${country}|${law}|${sourceYear}`)}`;}
 function showCorpusError(message){
   lawList.innerHTML=`<p style="color:var(--muted)">${escapeHtml(message)}</p>`;
   detail.innerHTML=`<div class="evidence"><strong>Corpus unavailable</strong><p style="font-size:14px;color:var(--muted)">${escapeHtml(message)}</p></div>`;
@@ -69,13 +70,14 @@ async function loadCorpus(){
     const keyStart=headers.indexOf('C_DISINFO_GEN');
     if(keyStart===-1) throw new Error('The CSV does not contain the C_DISINFO_GEN coding-key column.');
     codingKeys=headers.slice(keyStart).filter(header=>header&&!header.endsWith('_NOTE'));
-    corpusLaws=rows.filter(row=>row.some(cell=>String(cell).trim())).map((row,index)=>{
+    corpusLaws=rows.filter(row=>row.some(cell=>String(cell).trim())).map(row=>{
       const raw=Object.fromEntries(headers.map((header,column)=>[header,row[column]||'']));
       const rawCountry=raw.COUNTRY||'', rawLaw=raw.LAW||'';
       const country=cleanCountry(rawCountry), title=cleanLaw(rawLaw);
-      return {id:`csv-row-${index+1}`,country,title,year:parseYear(raw.SRCEYR),raw,search:`${rawCountry} ${country} ${rawLaw} ${title}`.toLowerCase()};
+      return {id:stableLawId(rawCountry,rawLaw,raw.SRCEYR||''),country,title,year:parseYear(raw.SRCEYR),raw,search:`${rawCountry} ${country} ${rawLaw} ${title}`.toLowerCase()};
     }).filter(law=>law.country||law.title);
     if(!corpusLaws.length) throw new Error('The CSV contains no usable law rows.');
+    document.getElementById('corpusCount').textContent=corpusLaws.length;
     const filter=document.getElementById('filter');
     filter.innerHTML='<option value="all">All jurisdictions</option>';
     [...new Set(corpusLaws.map(law=>law.country))].sort((a,b)=>a.localeCompare(b)).forEach(country=>{const option=document.createElement('option');option.value=country;option.textContent=country;filter.appendChild(option);});
@@ -136,7 +138,7 @@ function renderScoreGrid(laws){scoreGrid.innerHTML=laws.map(x=>{
   const score=(report.score===null || report.score===undefined) ? '—' : report.score;
   const scoreLabel=(report.score===null || report.score===undefined) ? 'Score pending' : `Score ${report.score}`;
   const category=report.category || 'Category pending';
-  return `<article class="score-card"><div class="score-top"><div><span class="badge">${x.country}</span><h3 style="margin-top:12px">${x.title}</h3><p class="count-pill">${x.year} · verified coding</p></div><div class="score-value">${score}</div></div><div class="score-scale"></div><div class="score-labels"><span>More restrictive</span><span>More protective</span></div><div class="tags" style="margin-top:15px"><span class="badge neutral">${scoreLabel}</span><span class="badge neutral">${category}</span></div>${report.rationale?`<div class="evidence"><strong>Assessment rationale</strong><p style="font-size:14px;color:var(--muted)">${report.rationale}</p></div>`:''}</article>`;
+  return `<article class="score-card"><div class="score-top"><div><span class="badge">${escapeHtml(x.country)}</span><h3 style="margin-top:12px">${escapeHtml(x.title)}</h3><p class="count-pill">${escapeHtml(x.year)} · verified coding</p></div><div class="score-value">${score}</div></div><div class="score-scale"></div><div class="score-labels"><span>More restrictive</span><span>More protective</span></div><div class="tags" style="margin-top:15px"><span class="badge neutral">${scoreLabel}</span><span class="badge neutral">${category}</span></div>${report.rationale?`<div class="evidence"><strong>Assessment rationale</strong><p style="font-size:14px;color:var(--muted)">${report.rationale}</p></div>`:''}</article>`;
 }).join('');}
 
 document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
