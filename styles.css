@@ -119,12 +119,12 @@ h3{line-height:1.35}
 .btn{border-radius:2px;min-height:44px;padding:12px 18px;justify-content:center;line-height:1.4;font-size:14px;background:transparent}
 :where(a,button,input,select,textarea):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .hero-field{background:var(--ink);color:white;border-bottom:8px solid var(--accent)}
-.hero{min-height:70vh;padding:64px 0;grid-template-columns:minmax(0,1.7fr) minmax(0,.8fr);gap:80px}
+.hero{min-height:70vh;padding:64px 0;grid-template-columns:minmax(0,1fr);gap:0}
 .hero .eyebrow{color:#9acff1}.hero .dot{background:#9acff1;border-radius:0}
 .hero h1{margin:24px 0;line-height:1.05}
 .hero-name{display:block;font-size:clamp(88px,10vw,144px);font-weight:800;letter-spacing:-.075em;line-height:.9;margin-bottom:20px}
 .hero-title{display:block;font-size:clamp(34px,3.7vw,54px);letter-spacing:-.04em}
-.hero .lead{color:#d3dbe6;font-size:18px;max-width:670px}
+.hero .lead{color:#d3dbe6;font-size:18px;max-width:860px}
 .hero .btn{color:white;border-color:#748196}
 .hero .btn.primary{border-color:var(--accent)}
 .hero .btn:hover{background:#203452}.hero .btn.primary:hover{background:#005a96}
