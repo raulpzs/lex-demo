@@ -115,13 +115,6 @@ function renderCbList(){
 cbMore.addEventListener('click',()=>{cbLimit+=24;renderCbList();});
 renderCbDetail(cbSelected);
 
-const sample='Article 12. Providers shall establish appropriate governance measures and procedures to protect the rights of users and maintain transparent oversight of regulated systems.';
-document.getElementById('sample').addEventListener('click',()=>document.getElementById('legalText').value=sample);
-document.getElementById('run').addEventListener('click',()=>{if(!document.getElementById('legalText').value.trim()){alert('Paste legal text or load the sample first.');return;}document.getElementById('empty').style.display='none';document.getElementById('results').style.display='block';});
-document.getElementById('verify').addEventListener('click',()=>document.getElementById('verified').style.display='block');
-document.getElementById('clear').addEventListener('click',()=>{document.getElementById('legalText').value='';document.getElementById('results').style.display='none';document.getElementById('empty').style.display='grid';document.getElementById('verified').style.display='none';});
-
-
 const trackerBody=document.getElementById('trackerBody'), trackerSearch=document.getElementById('trackerSearch'), trackerStatus=document.getElementById('trackerStatus'), trackerRegion=document.getElementById('trackerRegion'), trackerCount=document.getElementById('trackerCount');
 function renderTracker(){
  const q=trackerSearch.value.toLowerCase();
