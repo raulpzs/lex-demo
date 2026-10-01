@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="LEX — Law, Expression & AI." />
-  <title>LEX — Law, Expression & AI</title>
+  <meta name="description" content="LEX" />
+  <title>LEX</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,7 +20,6 @@
       <button data-page="research">Research</button>
       <button data-page="tracker">Global Tracker</button>
       <button data-page="hr">Human Rights Reporting</button>
-      <button data-page="about">About</button>
     </nav>
   </div>
 </header>
@@ -33,13 +32,13 @@
   <div class="wrap hero">
     <div>
       <h1><span class="hero-name">LEX</span><span class="hero-title">Laws of Expression</span></h1>
-      <p class="lead">LEX turns complex laws on expression, misinformation and disinformation into a structured comparative corpus with systematic legal coding and global legislative monitoring.</p>
+      <p class="lead">LEX presents a method and measurement of De Jure Freedom of Expression around the world. We provide a codebook for coding laws and a collected legal corpus of Expression, Defamation, and Mis-/Disinformation Laws.</p>
       <div class="actions"><button class="btn primary" data-page="corpus">Explore the corpus →</button><button class="btn" data-page="codebook">Explore the codebook</button></div>
     </div>
   </div>
   </div>
   <div class="wrap section">
-    <div class="section-head"><div><div class="eyebrow">One platform</div><h2>From legal text to public insight</h2></div><p>Move from legal instruments, to coded evidence, to comparative findings, legislative developments, and human-rights reporting.</p></div>
+    <div class="section-head"><div><div class="eyebrow">One platform</div><h2>From legal text to data</h2></div><p>Find coded evidence, comparative findings, legislative developments, and human-rights reporting.</p></div>
     <div class="cards">
       <article class="card"><div class="num"><span>01</span> CORPUS</div><h3>Explore laws</h3><p>Browse coded laws, inspect provisions, and compare jurisdictions.</p><button data-page="corpus">Explore →</button></article>
       <article class="card"><div class="num"><span>02</span> CODEBOOK</div><h3>Understand the coding</h3><p>Search the complete LEX coding framework and inspect Institutional Grammar for each item.</p><button data-page="codebook">Open codebook →</button></article>
@@ -112,39 +111,14 @@
         <a class="btn" href="https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/ITKWZW">Download all files ↓</a>
       </div>
     </div>
-    <div class="panel">
-      <div class="mini-title">Use the data</div>
-      <h3 style="margin-top:10px">Research-ready access</h3>
-      <p style="color:var(--muted)">The archive serves as the canonical public distribution point for LEX data. Dataset versions can be cited using the persistent DOI.</p>
-      <div class="evidence"><strong>Persistent identifier</strong><p style="font-size:14px;color:var(--muted)">The DOI remains the stable reference even as new dataset versions are published.</p></div>
-    </div>
   </div>
 </section>
 
 <section id="coding" class="page">
   <div class="wrap subhero"><div class="eyebrow">LEX coding tool</div><h1>Code a legal text.</h1><p class="lead">Analyze legal text through the LEX coding workflow and review coded results.</p></div>
-  <div class="wrap tool-grid">
-    <section class="panel">
-      <div class="step"><span>1</span><strong>Add a law</strong></div>
-      <div class="upload"><strong>Upload PDF / TXT / MD</strong><p style="font-size:13px;color:var(--muted)">PDF · TXT · MD</p><button id="sample" class="btn">Load sample text</button></div>
-      <label style="display:block;margin-top:16px"><span>Legal text</span><textarea id="legalText" placeholder="Paste legal text here…"></textarea></label>
-      <div class="actions" style="margin-top:14px"><button id="run" class="btn primary">Run Round 1 · Coding</button><button id="clear" class="btn">Clear</button></div>
-    </section>
-    <section class="panel">
-      <div class="step"><span>2</span><strong>Review coding</strong></div>
-      <div id="empty" class="results-empty"><div><strong>No results yet</strong><p>Run the coding workflow to review results.</p></div></div>
-      <div id="results" class="results">
-        <div class="stat-grid"><div class="stat"><b>4</b><span>matches</span></div><div class="stat"><b>R1</b><span>coding round</span></div></div>
-        <div class="result-item"><strong>Expression · Rights of others</strong><small>Evidence excerpt and legal citation.</small></div>
-        <div class="result-item"><strong>Governance · Oversight</strong><small>Model rationale followed by reviewer verification.</small></div>
-        <button id="verify" class="btn" style="width:100%;justify-content:center;margin-top:14px">Run Round 2 · Verification</button>
-        <div id="verified" class="notice" style="display:none;margin-top:12px">Verification complete. A reviewer can accept, edit, or reject each classification before publication.</div>
-      </div>
-    </section>
-  </div>
   <div class="wrap" style="padding-bottom:64px">
-    <div class="section-head"><div><div class="eyebrow">Existing functionality</div><h2>Expression Laws coding tool</h2></div><p>The existing Hugging Face coding tool is available directly within LEX.</p></div>
-    <div class="embed-wrap"><div class="embed-head"><strong>Expression Laws · live tool</strong><a class="btn" href="https://huggingface.co/spaces/raulpzs/expression_laws" target="_blank" rel="noopener">Open separately ↗</a></div><iframe src="https://raulpzs-expression-laws.hf.space/" title="LEX Expression Laws coding tool"></iframe></div>
+    <div class="section-head"><div><div class="eyebrow">Hugging Face Space</div><h2>Expression Laws coding tool</h2></div><p>An AI-powered coding tool is available for LEX.</p></div>
+    <div class="embed-wrap"><div class="embed-head"><strong>Expression Laws</strong><a class="btn" href="https://huggingface.co/spaces/raulpzs/expression_laws" target="_blank" rel="noopener">Open separately ↗</a></div><iframe src="https://raulpzs-expression-laws.hf.space/" title="LEX Expression Laws coding tool"></iframe></div>
   </div>
 </section>
 
@@ -153,7 +127,7 @@
   <div class="wrap pubs">
     <article class="pub"><span class="type">Cumulative Report · 2026</span><h3>A Cumulative Report on Expression Laws: Understanding the Legal Architectures that Govern Freedom of Expression</h3><p>Uses the LEX dataset to map how expression law has evolved across countries and over time, including the growth of platform governance, mis- and disinformation rules, crisis regulation, and emerging AI governance.</p><a href="Cumulative_Report_Expression_Laws.pdf" target="_blank" rel="noopener" class="btn">Read report ↗</a></article>
     <article class="pub"><span class="type">Technical Report · 2026</span><h3>Technical Report on Using LLMs for Legal Coding</h3><p>Evaluates LLMs and fine-tuned BERT approaches for coding expression laws and develops a two-stage, human-in-the-loop workflow for AI-assisted legal coding.</p><a href="LLMs_and_Expression_Laws.pdf" target="_blank" rel="noopener" class="btn">Read report ↗</a></article>
-    <article class="pub"><span class="type">Research Report · 2026</span><h3>Carrots, Sticks, and Our Right of Expression: How Executive Pressure Shapes Judicial Decisions and the Limits of Legal Text</h3><p>Examines how courts expand or restrict freedom of expression and how judicial decisions relate to formal expression law and executive pressure on the judiciary.</p><a href="Judicial_Decisions_and_Freedom_of_Expression.pdf" target="_blank" rel="noopener" class="btn">Read report ↗</a></article>
+    <!--<article class="pub"><span class="type">Research Report · 2026</span><h3>Carrots, Sticks, and Our Right of Expression: How Executive Pressure Shapes Judicial Decisions and the Limits of Legal Text</h3><p>Examines how courts expand or restrict freedom of expression and how judicial decisions relate to formal expression law and executive pressure on the judiciary.</p><a href="Judicial_Decisions_and_Freedom_of_Expression.pdf" target="_blank" rel="noopener" class="btn">Read report ↗</a></article>-->
   </div>
 </section>
 
@@ -185,30 +159,12 @@
     <h1>Assess the normative direction of Expression law.</h1>
     <p class="lead">LEX aggregates the valence of coded legal rules into law-level normative scores.</p>
   </div>
-  <div class="wrap hr-method">
-    <div class="panel">
-      <div class="mini-title">Normative score</div><h3 style="margin-top:10px">Built from coded legal rules</h3>
-      <p style="color:var(--muted)">The codebook distinguishes rules that appear as written, rules that do not appear, and rules that appear in negated form. Law-level reporting can aggregate these coded valences into a comparable score.</p>
-    </div>
-    <div class="panel">
-      <div class="mini-title">Categories</div><h3 style="margin-top:10px">Classification framework</h3>
-      <p style="color:var(--muted)">Each law will also receive a human-rights category.</p>
-      <div class="tags"><span class="badge neutral">Category framework pending</span></div>
-    </div>
-  </div>
   <div class="wrap">
     <div class="section-head"><div><h2 style="font-size:34px">Coded laws</h2></div><p>Scores populate from the verified coded dataset.</p></div>
     <div id="scoreGrid" class="score-grid"></div>
   </div>
 </section>
 
-<section id="about" class="page">
-  <div class="wrap subhero"><div class="eyebrow">About LEX</div><h1>A research infrastructure for understanding de jure freedom of expression around the world.</h1></div>
-  <div class="wrap about-grid">
-    <div><p class="lead">LEX is a framework for systematic legal coding of laws affecting freedom of expression. We provide a coding tool and data for scholars, practitioners, journalists, and policymakers.</p><div class="notice">LEX allows for legislative monitoring, human-rights reporting, and public-facing research on freedom of expression through legal coding with Institutional Grammar.</div></div>
-    <div class="flow"><div><b>1 · Collect</b><span>Identify relevant law.</span></div><div><b>2 · Code</b><span>Map to LEX codebook.</span></div><div><b>3 · Verify</b><span>Human review of results.</span></div><div><b>4 · Publish</b><span>Corpus, data, tracking, and research.</span></div></div>
-  </div>
-</section>
 </main>
 
 <footer><div class="wrap"><span>LEX · Laws of Expression</span><span>Comparative legal research platform</span></div></footer>
