@@ -115,12 +115,16 @@ function renderCbList(){
 cbMore.addEventListener('click',()=>{cbLimit+=24;renderCbList();});
 renderCbDetail(cbSelected);
 
-const trackerBody=document.getElementById('trackerBody'), trackerSearch=document.getElementById('trackerSearch'), trackerStatus=document.getElementById('trackerStatus'), trackerRegion=document.getElementById('trackerRegion'), trackerCount=document.getElementById('trackerCount');
+const trackerBody=document.getElementById('trackerBody'), trackerSearch=document.getElementById('trackerSearch'), trackerStatus=document.getElementById('trackerStatus'), trackerRegion=document.getElementById('trackerRegion'), trackerCount=document.getElementById('trackerCount'), trackerClosedBody=document.getElementById('trackerClosedBody'), trackerClosedCount=document.getElementById('trackerClosedCount');
 function renderTracker(){
  const q=trackerSearch.value.toLowerCase();
  const arr=tracker.filter(x=>(trackerStatus.value==='all'||x.status===trackerStatus.value)&&(trackerRegion.value==='all'||x.region===trackerRegion.value)&&(!q||(x.country+' '+x.bill+' '+x.relevance).toLowerCase().includes(q)));
  trackerCount.textContent=`${arr.length} tracked item${arr.length===1?'':'s'} · reviewed monthly`;
  trackerBody.innerHTML=arr.map(x=>`<tr><td><strong>${x.country}</strong><br><span style="color:var(--muted)">${x.region}</span></td><td>${x.bill}</td><td><span class="badge">${x.status}</span></td><td>${x.relevance}</td><td>${x.reviewed}</td><td><a class="source-link" href="${x.source}" target="_blank" rel="noopener">Official source ↗</a></td></tr>`).join('');
+ // Closed bills follow the search and region filters; the status filter applies only to bills under watch.
+ const closed=(typeof trackerClosed==='undefined'?[]:trackerClosed).filter(x=>(trackerRegion.value==='all'||x.region===trackerRegion.value)&&(!q||(x.country+' '+x.bill+' '+x.relevance+' '+x.outcome).toLowerCase().includes(q)));
+ trackerClosedCount.textContent=`${closed.length} bill${closed.length===1?'':'s'} · lapsed, withdrawn, or rejected`;
+ trackerClosedBody.innerHTML=closed.length?closed.map(x=>`<tr><td><strong>${x.country}</strong><br><span style="color:var(--muted)">${x.region}</span></td><td>${x.bill}</td><td><span class="badge neutral">${x.status}</span><br><span style="color:var(--muted);font-size:14px">${x.outcome}</span></td><td>${x.relevance}</td><td>${x.reviewed}</td><td><a class="source-link" href="${x.source}" target="_blank" rel="noopener">Official source ↗</a></td></tr>`).join(''):`<tr><td colspan="6" style="color:var(--muted)">No bills match the current filters.</td></tr>`;
 }
 [trackerSearch,trackerStatus,trackerRegion].forEach(el=>el.addEventListener(el.tagName==='INPUT'?'input':'change',renderTracker));
 renderTracker();
