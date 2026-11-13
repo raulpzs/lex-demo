@@ -41,7 +41,7 @@ const tracker = [
  {country:'United States',region:'Americas',bill:'S. 1837 · DEFIANCE Act of 2025',status:'Chamber review',relevance:'Civil remedies for non-consensual intimate digital forgeries and deepfakes involving privacy, likeness, and synthetic sexual imagery.',reviewed:'Nov 2026',source:'https://www.congress.gov/bill/119th-congress/senate-bill/1837'}
 ];
 
-// TABLE 2 · EXPRESSION LEGISLATION BEYOND AI
+// TABLE 2 · CYBERSECURITY, NATIONAL SECURITY, MEDIA, AND SPEECH LEGISLATION
 // Penal, media, cybercrime, foreign-agent, hate-speech, disinformation, and platform laws,
 // the same families coded in the LEX corpus. Same fields and status values as above.
 const trackerExpression = [

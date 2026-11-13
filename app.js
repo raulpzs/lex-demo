@@ -115,7 +115,7 @@ function renderCbList(){
 cbMore.addEventListener('click',()=>{cbLimit+=24;renderCbList();});
 renderCbDetail(cbSelected);
 
-const trackerBody=document.getElementById('trackerBody'), trackerSearch=document.getElementById('trackerSearch'), trackerStatus=document.getElementById('trackerStatus'), trackerRegion=document.getElementById('trackerRegion'), trackerCount=document.getElementById('trackerCount'), trackerClosedBody=document.getElementById('trackerClosedBody'), trackerExprBody=document.getElementById('trackerExprBody'), trackerExprCount=document.getElementById('trackerExprCount'), trackerEnactedBody=document.getElementById('trackerEnactedBody');
+const trackerBody=document.getElementById('trackerBody'), trackerSearch=document.getElementById('trackerSearch'), trackerStatus=document.getElementById('trackerStatus'), trackerRegion=document.getElementById('trackerRegion'), trackerClosedBody=document.getElementById('trackerClosedBody'), trackerExprBody=document.getElementById('trackerExprBody'), trackerEnactedBody=document.getElementById('trackerEnactedBody');
 const trackerEmptyRow=`<tr><td colspan="6" style="color:var(--muted)">No bills match the current filters.</td></tr>`;
 function trackerRow(x,statusCell){
  return `<tr><td><strong>${x.country}</strong><br><span style="color:var(--muted)">${x.region}</span></td><td>${x.bill}</td><td>${statusCell}</td><td>${x.relevance}</td><td>${x.reviewed}</td><td><a class="source-link" href="${x.source}" target="_blank" rel="noopener">${x.sourceLabel||'Official source'} ↗</a></td></tr>`;
@@ -125,13 +125,11 @@ function renderTracker(){
  const matches=(x,extra='')=>(trackerRegion.value==='all'||x.region===trackerRegion.value)&&(!q||(x.country+' '+x.bill+' '+x.relevance+' '+extra).toLowerCase().includes(q));
  const open=list=>(list||[]).filter(x=>(trackerStatus.value==='all'||x.status===trackerStatus.value)&&matches(x));
  const ai=open(tracker), expr=open(typeof trackerExpression==='undefined'?[]:trackerExpression);
- trackerCount.textContent=`${ai.length} tracked item${ai.length===1?'':'s'} · reviewed monthly`;
- trackerExprCount.textContent=`${expr.length} tracked item${expr.length===1?'':'s'} · reviewed monthly`;
  trackerBody.innerHTML=ai.length?ai.map(x=>trackerRow(x,`<span class="badge">${x.status}</span>`)).join(''):trackerEmptyRow;
  trackerExprBody.innerHTML=expr.length?expr.map(x=>trackerRow(x,`<span class="badge">${x.status}</span>`)).join(''):trackerEmptyRow;
  // Enacted and closed tables follow the search and region filters; the status filter applies only to bills under watch.
  const enacted=(typeof trackerEnacted==='undefined'?[]:trackerEnacted).filter(x=>matches(x));
- trackerEnactedBody.innerHTML=enacted.length?enacted.map(x=>trackerRow(x,`<span class="badge neutral">${x.track==='AI'?'AI and synthetic media':'Beyond AI'}</span>`)).join(''):trackerEmptyRow;
+ trackerEnactedBody.innerHTML=enacted.length?enacted.map(x=>trackerRow(x,`<span class="badge neutral">${x.track==='AI'?'AI and synthetic media':'Cybersecurity, security, media, and speech'}</span>`)).join(''):trackerEmptyRow;
  const closed=(typeof trackerClosed==='undefined'?[]:trackerClosed).filter(x=>matches(x,x.outcome));
  trackerClosedBody.innerHTML=closed.length?closed.map(x=>trackerRow(x,`<span class="badge neutral">${x.status}</span><br><span style="color:var(--muted);font-size:14px">${x.outcome}</span>`)).join(''):trackerEmptyRow;
 }
