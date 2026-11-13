@@ -135,7 +135,7 @@
   <div class="wrap subhero">
     <div class="eyebrow">Global Tracker · Updated monthly</div>
     <h1>Track bills before they become law.</h1>
-    <p class="lead">LEX monitors proposed national legislation that could enter the corpus if enacted and that has a meaningful connection to freedom of expression, online speech, synthetic media, or platform governance.</p>
+    <p class="lead">LEX monitors proposed national legislation that could enter the corpus if enacted and that has a meaningful connection to freedom of expression. The tracker follows two tracks: artificial intelligence and synthetic media, the fastest-moving area of expression law today, and the wider body of penal, media, cybercrime, foreign-agent, hate-speech, and platform laws that make up most of the LEX corpus.</p>
     <div class="tracker-controls">
       <label><span>Search tracker</span><input id="trackerSearch" placeholder="Search country, bill, topic…"></label>
       <label><span>Status</span><select id="trackerStatus"><option value="all">All statuses</option><option>Draft</option><option>Introduced</option><option>Committee</option><option>Chamber review</option><option>Enacted</option></select></label>
@@ -143,14 +143,21 @@
     </div>
   </div>
   <div class="wrap">
-    <div class="section-head"><div><h2 style="font-size:34px">Legislation under watch</h2></div><p id="trackerCount"></p></div>
+    <div class="section-head"><div><h2 style="font-size:34px">AI and synthetic media legislation</h2></div><p id="trackerCount"></p></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Country</th><th>Bill</th><th>Status</th><th>Expression relevance</th><th>Last reviewed</th><th>Source</th></tr></thead>
         <tbody id="trackerBody"></tbody>
       </table>
     </div>
-    <div class="section-head" style="margin-top:56px"><div><h2 style="font-size:34px">Bills that did not become law</h2></div><p id="trackerClosedCount"></p></div>
+    <div class="section-head" style="margin-top:56px"><div><h2 style="font-size:34px">Expression legislation beyond AI</h2></div><p id="trackerExprCount"></p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Country</th><th>Bill</th><th>Status</th><th>Expression relevance</th><th>Last reviewed</th><th>Source</th></tr></thead>
+        <tbody id="trackerExprBody"></tbody>
+      </table>
+    </div>
+    <div class="section-head" style="margin-top:56px"><div><h2 style="font-size:34px">Bills that did not become law</h2></div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Country</th><th>Bill</th><th>Outcome</th><th>Expression relevance</th><th>Last reviewed</th><th>Source</th></tr></thead>
