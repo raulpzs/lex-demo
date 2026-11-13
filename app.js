@@ -42,7 +42,59 @@ function cleanCountry(value){
   const raw=String(value||'').trim().replace(/\s+/g,' ');
   return ({'Phillipines':'Philippines','Gambia':'The Gambia','OEA':'Organization of American States','United States of America':'United States','Côte d"Ivoire':'Côte d’Ivoire'})[raw]||raw;
 }
-function cleanLaw(value){return String(value||'').trim().replace(/\s+/g,' ');}
+// Display-only formatting for law titles (capitalization, punctuation, accents).
+// The CSV stays untouched; law IDs are still built from the raw LAW value.
+const lawDisplayNames={
+ 'Ordonnance N 66-156':'Ordonnance n° 66-156',
+ "loi n 82-01 du 6 fevrier 1982 portent code de l'information":'Loi n° 82-01 du 6 février 1982 portant code de l’information',
+ "loi n 90-07 avril 1990 relative a l'information":'Loi n° 90-07 (avril 1990) relative à l’information',
+ "loi organique n 12-05 du 12 janvier 2012 relative a l'information":'Loi organique n° 12-05 du 12 janvier 2012 relative à l’information',
+ 'loi organique n 23-14 du 27 aout 2023':'Loi organique n° 23-14 du 27 août 2023',
+ 'Law No. 30-VIQD - Amendments to the Law on Information, Informatization and Protection of Information':'Law No. 30-VIQD – Amendments to the Law on Information, Informatization and Protection of Information',
+ 'On information, informatization, and information protection':'On Information, Informatization, and Information Protection',
+ 'DIGITAL SECURITY ACT, 2018':'Digital Security Act, 2018',
+ 'Law Against Racism And All Forms Of Discrimination':'Law Against Racism and All Forms of Discrimination',
+ 'Emergency Powers (COVID-19)(AMENDMENT)(No. 2) Regulations, 2020':'Emergency Powers (COVID-19) (Amendment) (No. 2) Regulations, 2020',
+ 'Emergency Powers (COVID-19)(AMENDMENT)Regulations, 2020':'Emergency Powers (COVID-19) (Amendment) Regulations, 2020',
+ 'LOI n° 2013-451':'Loi n° 2013-451',
+ 'The law about Nation Management in the State of Emergency (translated)':'The Law About Nation Management in the State of Emergency (translated)',
+ 'LAW PROHIBITING MARAS, GANGS, GROUPS, ASSOCIATIONS AND ORGANIZATIONS OF A CRIMINAL NATURE':'Law Prohibiting Maras, Gangs, Groups, Associations and Organizations of a Criminal Nature',
+ 'Special Law Against Computer and related Crimes':'Special Law Against Computer and Related Crimes',
+ 'Decree 349 Penal Code Reforms':'Decree 349: Penal Code Reforms',
+ 'Decree 880 Penal Code Reform':'Decree 880: Penal Code Reform',
+ 'LOI no 2018-1202 du 22 décembre 2018 relative à la lutte contre la manipulation de l’information':'Loi n° 2018-1202 du 22 décembre 2018 relative à la lutte contre la manipulation de l’information',
+ 'Law No. 019_2016':'Law No. 019/2016',
+ 'LEY DE EMISIÓN DEL PENSAMIENTO (Thought Expression Law)':'Ley de Emisión del Pensamiento (Thought Expression Law)',
+ 'ACT LXXIX OF 2021 ON TAKING MORE SEVERE ACTION AGAINST PAEDOPHILE OFFENDERS AND AMENDING CERTAIN ACTS FOR THE PROTECTION OF CHILDREN':'Act LXXIX of 2021 on Taking More Severe Action Against Paedophile Offenders and Amending Certain Acts for the Protection of Children',
+ 'ACT LXXXVIII OF 2023 ON THE PROTECTION OF NATIONAL SOVEREIGNTY':'Act LXXXVIII of 2023 on the Protection of National Sovereignty',
+ 'Act XII of 2020 on the containment of coronavirus':'Act XII of 2020 on the Containment of Coronavirus',
+ 'Law on the independent media commission':'Law on the Independent Media Commission',
+ 'Law On The Independent Media Commission And Broadcasting':'Law on the Independent Media Commission and Broadcasting',
+ 'Decree On Information Management on the Internet':'Decree on Information Management on the Internet',
+ 'BAYANIHAN TO HEAL AS ONE ACT (REPUBLIC ACT NO. 11469)':'Bayanihan to Heal as One Act (Republic Act No. 11469)',
+ 'Act of 27 June 1997 on political parties':'Act of 27 June 1997 on Political Parties',
+ 'Act from December 30, 2015 on amending the Act on Radio and Television Broadcasting':'Act from December 30, 2015, on Amending the Act on Radio and Television Broadcasting',
+ 'Law determining offences and penalties in general':'Law Determining Offences and Penalties in General',
+ 'Law on prevention and punishment of cybercrimes':'Law on Prevention and Punishment of Cybercrimes',
+ 'DISASTER MANAGEMENT ACT, 2002':'Disaster Management Act, 2002',
+ 'Thailand’s Cybercrime Act amendment':'Thailand’s Cybercrime Act Amendment',
+ 'THE LAW ON REGULATION OF BROADCASTS VIA INTERNET AND COMBATING CRIMES COMMITTED BY THE MEANS OF SUCH PUBLICATIONS':'The Law on Regulation of Broadcasts via Internet and Combating Crimes Committed by the Means of Such Publications',
+ 'Law No. 16099 Press and freedom of communication Law':'Law No. 16099: Press and Freedom of Communication Law',
+ 'Law No. 16099 Reform to Press and freedom of communication Law':'Law No. 16099: Reform to Press and Freedom of Communication Law',
+ 'Law No. 20838 Reform to the Regulation of Audiovisual Communications Services':'Law No. 20838: Reform to the Regulation of Audiovisual Communications Services',
+ 'Law No. 1219 Special Law Against Cybercrime Reform':'Law No. 1219: Special Law Against Cybercrime Reform',
+ 'Law on the Excersice of Journalism':'Law on the Exercise of Journalism',
+ 'Decree 4.975 Creation of Cybersecurity Council':'Decree 4.975: Creation of Cybersecurity Council',
+ 'Law on the Supervision, Regularization, Performance, and Financing of Non-Governmental Organizations and Non-profit Social Organizations':'Law on the Supervision, Regularization, Performance, and Financing of Non-Governmental Organizations and Non-Profit Social Organizations'
+};
+function cleanLaw(value){
+ const raw=String(value||'').trim().replace(/\s+/g,' ');
+ if(lawDisplayNames[raw]) return lawDisplayNames[raw];
+ // "(Algeria 1969) Algeria Penal Code 1969 as amended by 69-74" → "Algeria Penal Code 1969, as amended by 69-74"
+ const algeria=raw.match(/^\(Algeria \d{4}\) (Algeria Penal Code \d{4}) as amended by (\S+)$/);
+ if(algeria) return `${algeria[1]}, as amended by ${algeria[2]}`;
+ return raw.replace(/(\w)'/g,'$1’');
+}
 function stableLawId(country,law,sourceYear){return `law-${encodeURIComponent(`${country}|${law}|${sourceYear}`)}`;}
 function showCorpusError(message){
   lawList.innerHTML=`<p style="color:var(--muted)">${escapeHtml(message)}</p>`;
